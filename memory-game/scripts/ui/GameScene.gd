@@ -17,8 +17,12 @@ var _second: Card
 var _total_cards := 0
 var _matched_cards := 0
 
+const _CARD_BASE_SIZE: Vector2 = Vector2(725.0, 1102.0)
+
 func _ready() -> void:
 	overlay.visible = false
+	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	overlay_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_start_msec = Time.get_ticks_msec()
 	_first = null
 	_second = null
@@ -30,6 +34,35 @@ func _ready() -> void:
 	info_label.text = "Jogador: %s  |  Nível %d (%d pares)" % [GameState.player_name, level + 1, pairs]
 
 	_build_board(pairs)
+
+
+func _input(event: InputEvent) -> void:
+	# Clique nas cartas via scene-level picking (mais confiável no Godot 4.5)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if overlay.visible:
+			return
+		# Se o mouse está sobre algum Control (ex.: botão Voltar), deixa a UI lidar.
+		var hovered := get_viewport().gui_get_hovered_control()
+		if hovered != null:
+			return
+
+		var picked := _pick_card_at(get_global_mouse_position())
+		if picked != null:
+			get_viewport().set_input_as_handled()
+			_on_card_pressed(picked)
+
+
+func _pick_card_at(mouse_global: Vector2) -> Card:
+	var children := board.get_children()
+	for idx in range(children.size() - 1, -1, -1):
+		var n := children[idx]
+		if n is Card:
+			var c: Card = n
+			var local := c.to_local(mouse_global)
+			var rect := Rect2(-_CARD_BASE_SIZE * 0.5, _CARD_BASE_SIZE)
+			if rect.has_point(local):
+				return c
+	return null
 
 func _process(_delta: float) -> void:
 	var elapsed := float(Time.get_ticks_msec() - _start_msec) / 1000.0
@@ -144,6 +177,7 @@ func _finish_level() -> void:
 	var elapsed := float(Time.get_ticks_msec() - _start_msec) / 1000.0
 	var level := GameState.current_level
 	GameState.complete_level(level, elapsed)
+	_blocked = true
 
 	overlay.visible = true
 	overlay_label.text = "Concluído! Tempo: %s" % GameState.format_time(elapsed)
