@@ -22,8 +22,8 @@ func _reset_run_state() -> void:
 		level_times[i] = -1.0
 	_run_start_msec = Time.get_ticks_msec()
 
-func start_new_run(name: String) -> void:
-	player_name = name.strip_edges()
+func start_new_run(player_name_input: String) -> void:
+	player_name = player_name_input.strip_edges()
 	_reset_run_state()
 
 func get_pairs_for_level(level_index: int) -> int:
@@ -105,6 +105,6 @@ func format_time(seconds: float) -> String:
 	if seconds < 0:
 		return "--:--"
 	var s := int(round(seconds))
-	var m := s / 60
+	var m := s // 60
 	s = s % 60
 	return "%02d:%02d" % [m, s]
