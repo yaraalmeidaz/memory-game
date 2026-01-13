@@ -13,7 +13,7 @@ var matched := false
 @onready var personagem_sprite: Sprite2D = $CardBack/CardFront/Personagem
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-const _PERSONAGEM_FILL := 0.82
+const _PERSONAGEM_FILL := 0.92
 
 
 func _ready() -> void:

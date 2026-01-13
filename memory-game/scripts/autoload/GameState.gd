@@ -1,6 +1,6 @@
 extends Node
 
-const LEVEL_PAIRS: Array[int] = [2, 4, 5, 7, 9, 12]
+const LEVEL_PAIRS: Array[int] = [2, 4, 5, 8, 9, 12]
 const LEADERBOARD_PATH := "user://leaderboard.cfg"
 
 var player_name: String = ""
