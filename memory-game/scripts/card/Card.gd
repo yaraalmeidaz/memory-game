@@ -20,6 +20,8 @@ func _ready() -> void:
 	personagem_sprite.visible = false
 	card_back.visible = true
 
+	set_process_unhandled_input(true)
+
 	# carregar imagem do personagem
 	if personagem != "":
 		var path := "res://assets/imagens/Personagens/%s.png" % personagem
@@ -83,3 +85,16 @@ func _on_area_2d_input_event(
 		if matched:
 			return
 		pressed.emit(self)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Fallback: garante clique mesmo se Area2D não disparar input_event
+	if matched:
+		return
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		var w: float = 725.0 * scale.x
+		var h: float = 1102.0 * scale.y
+		var rect := Rect2(Vector2(-w * 0.5, -h * 0.5), Vector2(w, h))
+		var local := to_local(get_global_mouse_position())
+		if rect.has_point(local):
+			pressed.emit(self)
