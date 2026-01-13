@@ -105,6 +105,6 @@ func format_time(seconds: float) -> String:
 	if seconds < 0:
 		return "--:--"
 	var s := int(round(seconds))
-	var m := s // 60
+	var m := int(s / 60)
 	s = s % 60
 	return "%02d:%02d" % [m, s]

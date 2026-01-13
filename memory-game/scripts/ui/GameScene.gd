@@ -60,24 +60,24 @@ func _build_board(pairs: int) -> void:
 	_total_cards = deck.size()
 
 	# layout
-	var vp := get_viewport_rect().size
-	var top_reserved := 80.0
-	var area_w := vp.x
-	var area_h := vp.y - top_reserved
-	var columns := int(ceil(sqrt(float(deck.size()))))
-	var rows := int(ceil(float(deck.size()) / float(columns)))
+	var vp: Vector2 = get_viewport_rect().size
+	var top_reserved: float = 80.0
+	var area_w: float = vp.x
+	var area_h: float = vp.y - top_reserved
+	var columns: int = int(ceil(sqrt(float(deck.size()))))
+	var rows: int = int(ceil(float(deck.size()) / float(columns)))
 
-	var base_size := Vector2(725.0, 1102.0)
-	var gap := 10.0
-	var scale_x := (area_w - gap * (columns - 1)) / (base_size.x * columns)
-	var scale_y := (area_h - gap * (rows - 1)) / (base_size.y * rows)
-	var s := clamp(min(scale_x, scale_y), 0.06, 0.22)
+	var base_size: Vector2 = Vector2(725.0, 1102.0)
+	var gap: float = 10.0
+	var scale_x: float = (area_w - gap * float(columns - 1)) / (base_size.x * float(columns))
+	var scale_y: float = (area_h - gap * float(rows - 1)) / (base_size.y * float(rows))
+	var s: float = clampf(minf(scale_x, scale_y), 0.06, 0.22)
 
-	var card_w := base_size.x * s
-	var card_h := base_size.y * s
-	var grid_w := columns * card_w + (columns - 1) * gap
-	var grid_h := rows * card_h + (rows - 1) * gap
-	var origin := Vector2((vp.x - grid_w) * 0.5, top_reserved + (area_h - grid_h) * 0.5)
+	var card_w: float = base_size.x * s
+	var card_h: float = base_size.y * s
+	var grid_w: float = float(columns) * card_w + float(columns - 1) * gap
+	var grid_h: float = float(rows) * card_h + float(rows - 1) * gap
+	var origin: Vector2 = Vector2((vp.x - grid_w) * 0.5, top_reserved + (area_h - grid_h) * 0.5)
 
 	for i in deck.size():
 		var card := CARD_SCENE.instantiate() as Card
@@ -86,10 +86,10 @@ func _build_board(pairs: int) -> void:
 		card.pressed.connect(_on_card_pressed)
 		board.add_child(card)
 
-		var col := i % columns
-		var row := i / columns
-		var x := origin.x + col * (card_w + gap) + card_w * 0.5
-		var y := origin.y + row * (card_h + gap) + card_h * 0.5
+		var col: int = i % columns
+		var row: int = int(i / columns)
+		var x: float = origin.x + float(col) * (card_w + gap) + card_w * 0.5
+		var y: float = origin.y + float(row) * (card_h + gap) + card_h * 0.5
 		card.position = Vector2(x, y)
 
 func _on_card_pressed(card: Card) -> void:
