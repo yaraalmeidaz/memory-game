@@ -1,0 +1,134 @@
+[gd_scene load_steps=10 format=3 uid="uid://k1nkaqp6ncmr"]
+
+[ext_resource type="Script" uid="uid://bytbup42f5sii" path="res://scripts/card/Card.gd" id="1_0hol4"]
+[ext_resource type="Texture2D" uid="uid://dfnknjvqwdqe2" path="res://assets/imagens/CardBack.png" id="1_epypp"]
+[ext_resource type="Texture2D" uid="uid://cn8kpcmix1a0x" path="res://assets/imagens/CardFront.png" id="2_0hol4"]
+[ext_resource type="Texture2D" uid="uid://c28yxmgrarrxs" path="res://assets/imagens/Personagens/neferpitou.png" id="3_epypp"]
+
+[sub_resource type="Animation" id="Animation_kdubu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CardBack:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1.021)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CardBack/CardFront:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_d21ai"]
+resource_name = "flip-down"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CardBack/CardFront:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CardBack:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.1, 1.2), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_q6r6c"]
+resource_name = "flip-up"
+length = 0.6
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CardBack:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 1.2), Vector2(1, 1.021), Vector2(1, 1.021)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CardBack/CardFront:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rj586"]
+_data = {
+&"RESET": SubResource("Animation_kdubu"),
+&"flip-down": SubResource("Animation_d21ai"),
+&"flip-up": SubResource("Animation_q6r6c")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_epypp"]
+size = Vector2(725, 1102)
+
+[node name="Node2D" type="Node2D"]
+scale = Vector2(0.25, 0.25)
+script = ExtResource("1_0hol4")
+
+[node name="CardBack" type="Sprite2D" parent="."]
+position = Vector2(1063.375, 625.1675)
+scale = Vector2(1, 1.021)
+texture = ExtResource("1_epypp")
+
+[node name="CardFront" type="Sprite2D" parent="CardBack"]
+visible = false
+position = Vector2(0.625, 2.774292)
+scale = Vector2(0.9889065, 0.993789)
+texture = ExtResource("2_0hol4")
+
+[node name="Personagem" type="Sprite2D" parent="CardBack/CardFront"]
+position = Vector2(3.0336707, 67.01759)
+scale = Vector2(2.172246, 2.3252895)
+texture = ExtResource("3_epypp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_rj586")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(852, 524)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(204, 96)
+shape = SubResource("RectangleShape2D_epypp")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

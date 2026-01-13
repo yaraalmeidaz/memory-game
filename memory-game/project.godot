@@ -1,0 +1,65 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="memory-game"
+run/main_scene="res://scenes/MainMenu.tscn"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+
+[autoload]
+
+GameState="*res://scripts/autoload/GameState.gd"
+
+[display]
+
+window/size/viewport_width=800
+window/size/viewport_height=600
+window/stretch/mode="canvas_items"
+mouse_cursor/custom_image="res://assets/imagens/pointer_toon_a.svg"
+mouse_cursor/custom_image_hotspot=Vector2(0, 0)
+
+[gui]
+
+theme/custom_font="uid://c41e3vo238mus"
+
+[importer_defaults]
+
+texture={
+"compress/channel_pack": 0,
+"compress/hdr_compression": 1,
+"compress/high_quality": false,
+"compress/lossy_quality": 0.7,
+"compress/mode": 0,
+"compress/normal_map": 0,
+"compress/rdo_quality_loss": 0.0,
+"compress/uastc_level": 0,
+"detect_3d/compress_to": 0,
+"mipmaps/generate": false,
+"mipmaps/limit": -1,
+"process/channel_remap/alpha": 3,
+"process/channel_remap/blue": 2,
+"process/channel_remap/green": 1,
+"process/channel_remap/red": 0,
+"process/fix_alpha_border": true,
+"process/hdr_as_srgb": false,
+"process/hdr_clamp_exposure": false,
+"process/normal_map_invert_y": false,
+"process/premult_alpha": false,
+"process/size_limit": 0,
+"roughness/mode": 0,
+"roughness/src_normal": ""
+}
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
