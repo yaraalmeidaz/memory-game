@@ -133,9 +133,9 @@ func _check_pair() -> void:
 
 	await get_tree().create_timer(0.85).timeout
 	if _first:
-		_first.hide()
+		_first.conceal()
 	if _second:
-		_second.hide()
+		_second.conceal()
 	_first = null
 	_second = null
 	_blocked = false

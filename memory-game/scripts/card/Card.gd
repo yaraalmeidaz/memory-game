@@ -40,7 +40,7 @@ func reveal() -> void:
 	_card_up()
 
 
-func hide() -> void:
+func conceal() -> void:
 	if matched:
 		return
 	if not _flipped:
