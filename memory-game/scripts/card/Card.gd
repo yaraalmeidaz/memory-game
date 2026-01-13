@@ -13,6 +13,8 @@ var matched := false
 @onready var personagem_sprite: Sprite2D = $CardBack/CardFront/Personagem
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+const _PERSONAGEM_FILL := 0.82
+
 
 func _ready() -> void:
 	# estado inicial
@@ -27,11 +29,35 @@ func _ready() -> void:
 		var path := "res://assets/imagens/Personagens/%s.png" % personagem
 		if ResourceLoader.exists(path):
 			personagem_sprite.texture = load(path)
+			_fit_personagem()
 		else:
 			push_error("Imagem não encontrada: " + path)
 
 	matched = false
 	_flipped = false
+	personagem_sprite.position = Vector2.ZERO
+
+
+func _fit_personagem() -> void:
+	# Centraliza e ajusta escala do personagem para ocupar bem a frente da carta.
+	if personagem_sprite.texture == null:
+		return
+	if card_front.texture == null:
+		return
+
+	personagem_sprite.centered = true
+	personagem_sprite.position = Vector2.ZERO
+
+	var tex_size: Vector2 = personagem_sprite.texture.get_size()
+	if tex_size.x <= 0.0 or tex_size.y <= 0.0:
+		return
+
+	var front_size: Vector2 = card_front.texture.get_size()
+	var target: Vector2 = front_size * _PERSONAGEM_FILL
+	var sx: float = target.x / tex_size.x
+	var sy: float = target.y / tex_size.y
+	var s: float = minf(sx, sy)
+	personagem_sprite.scale = Vector2.ONE * s
 
 
 func reveal() -> void:

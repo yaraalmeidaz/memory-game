@@ -18,6 +18,7 @@ var _total_cards := 0
 var _matched_cards := 0
 
 const _CARD_BASE_SIZE: Vector2 = Vector2(725.0, 1102.0)
+const _PREFERRED_COLUMNS: Array[int] = [6, 5, 4, 3, 2]
 
 func _ready() -> void:
 	overlay.visible = false
@@ -97,14 +98,14 @@ func _build_board(pairs: int) -> void:
 	var top_reserved: float = 80.0
 	var area_w: float = vp.x
 	var area_h: float = vp.y - top_reserved
-	var columns: int = int(ceil(sqrt(float(deck.size()))))
+	var columns: int = _choose_columns(deck.size())
 	var rows: int = int(ceil(float(deck.size()) / float(columns)))
 
 	var base_size: Vector2 = Vector2(725.0, 1102.0)
 	var gap: float = 10.0
 	var scale_x: float = (area_w - gap * float(columns - 1)) / (base_size.x * float(columns))
 	var scale_y: float = (area_h - gap * float(rows - 1)) / (base_size.y * float(rows))
-	var s: float = clampf(minf(scale_x, scale_y), 0.06, 0.22)
+	var s: float = clampf(minf(scale_x, scale_y), 0.06, 0.30)
 
 	var card_w: float = base_size.x * s
 	var card_h: float = base_size.y * s
@@ -124,6 +125,29 @@ func _build_board(pairs: int) -> void:
 		var x: float = origin.x + float(col) * (card_w + gap) + card_w * 0.5
 		var y: float = origin.y + float(row) * (card_h + gap) + card_h * 0.5
 		card.position = Vector2(x, y)
+
+
+func _choose_columns(card_count: int) -> int:
+	# Mantém um padrão por linha e tenta evitar última linha incompleta.
+	# Preferências: 6,5,4,3,2 (nessa ordem).
+	for c in _PREFERRED_COLUMNS:
+		if c <= 0:
+			continue
+		if card_count % c == 0:
+			return c
+
+	# Se não der para dividir perfeito, escolhe a opção com menos espaços vazios.
+	var best_c := 4
+	var best_empty := 999999
+	for c in _PREFERRED_COLUMNS:
+		if c <= 0:
+			continue
+		var rows := int(ceil(float(card_count) / float(c)))
+		var empty := rows * c - card_count
+		if empty < best_empty:
+			best_empty = empty
+			best_c = c
+	return best_c
 
 func _on_card_pressed(card: Card) -> void:
 	if _blocked:
