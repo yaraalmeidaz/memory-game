@@ -1,65 +1,87 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://b6jah4018il5p"]
 
-[ext_resource type="Script" path="res://scripts/ui/MainMenu.gd" id="1"]
-[ext_resource type="Script" path="res://scripts/ui/FreePosition.gd" id="2"]
+[ext_resource type="Script" uid="uid://ecv1g1eflubg" path="res://scripts/ui/MainMenu.gd" id="1"]
+[ext_resource type="Script" uid="uid://b0cvcx804jr20" path="res://scripts/ui/FreePosition.gd" id="2"]
 
 [node name="MainMenu" type="Control"]
-anchor_left = 0.0
-anchor_top = 0.0
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1")
 
 [node name="VBox" type="Control" parent="."]
-anchor_left = 0.0
-anchor_top = 0.0
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
 
 [node name="Title" type="Label" parent="VBox"]
-text = "Jogo da Memória"
-horizontal_alignment = 1
 custom_minimum_size = Vector2(400, 0)
+layout_mode = 0
+offset_left = 200.0
+offset_top = 120.0
+offset_right = 600.0
+offset_bottom = 136.0
+text = "Jogo da Memória diva"
+horizontal_alignment = 1
 script = ExtResource("2")
 enabled = true
 position_px = Vector2(200, 120)
 
 [node name="Spacer" type="Control" parent="VBox"]
 custom_minimum_size = Vector2(0, 14)
+anchors_preset = 0
+offset_bottom = 14.0
 script = ExtResource("2")
 enabled = true
-position_px = Vector2(0, 0)
 
 [node name="NameLabel" type="Label" parent="VBox"]
-text = "Seu nome:"
 custom_minimum_size = Vector2(220, 0)
+layout_mode = 0
+offset_left = 240.0
+offset_top = 200.0
+offset_right = 460.0
+offset_bottom = 216.0
+text = "Seu nome:"
 script = ExtResource("2")
 enabled = true
 position_px = Vector2(240, 200)
 
 [node name="NameEdit" type="LineEdit" parent="VBox"]
-placeholder_text = "Digite seu nome"
 custom_minimum_size = Vector2(320, 34)
+layout_mode = 0
+offset_left = 240.0
+offset_top = 235.0
+offset_right = 560.0
+offset_bottom = 269.0
+placeholder_text = "Digite seu nome"
 script = ExtResource("2")
 enabled = true
 position_px = Vector2(240, 235)
 
 [node name="Start" type="Button" parent="VBox"]
-text = "Iniciar"
-disabled = true
 custom_minimum_size = Vector2(180, 44)
+layout_mode = 0
+offset_left = 310.0
+offset_top = 285.0
+offset_right = 490.0
+offset_bottom = 329.0
+disabled = true
+text = "Iniciar"
 script = ExtResource("2")
 enabled = true
 position_px = Vector2(310, 285)
 
 [node name="Hint" type="Label" parent="VBox"]
-text = "Complete os níveis em sequência.\nNo final, aparece o Top 5 por tempo total."
-horizontal_alignment = 1
 custom_minimum_size = Vector2(520, 0)
+layout_mode = 0
+offset_left = 140.0
+offset_top = 350.0
+offset_right = 812.0
+offset_bottom = 385.0
+text = "Complete os níveis em sequência.
+No final, aparece o Top 5 por tempo total."
+horizontal_alignment = 1
 script = ExtResource("2")
 enabled = true
 position_px = Vector2(140, 350)
