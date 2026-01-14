@@ -50,8 +50,57 @@ script = ExtResource("2")
 enabled = true
 position_px = Vector2(140, 190)
 
-[node name="Grid" type="GridContainer" parent="VBox/Scroll"]
-columns = 1
+[node name="Grid" type="Control" parent="VBox/Scroll"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="Level1" type="Button" parent="VBox/Scroll/Grid"]
+text = "Nível 1"
+custom_minimum_size = Vector2(520, 46)
+script = ExtResource("2")
+enabled = true
+position_px = Vector2(0, 0)
+
+[node name="Level2" type="Button" parent="VBox/Scroll/Grid"]
+text = "Nível 2"
+custom_minimum_size = Vector2(520, 46)
+script = ExtResource("2")
+enabled = true
+position_px = Vector2(0, 56)
+
+[node name="Level3" type="Button" parent="VBox/Scroll/Grid"]
+text = "Nível 3"
+custom_minimum_size = Vector2(520, 46)
+script = ExtResource("2")
+enabled = true
+position_px = Vector2(0, 112)
+
+[node name="Level4" type="Button" parent="VBox/Scroll/Grid"]
+text = "Nível 4"
+custom_minimum_size = Vector2(520, 46)
+script = ExtResource("2")
+enabled = true
+position_px = Vector2(0, 168)
+
+[node name="Level5" type="Button" parent="VBox/Scroll/Grid"]
+text = "Nível 5"
+custom_minimum_size = Vector2(520, 46)
+script = ExtResource("2")
+enabled = true
+position_px = Vector2(0, 224)
+
+[node name="Level6" type="Button" parent="VBox/Scroll/Grid"]
+text = "Nível 6"
+custom_minimum_size = Vector2(520, 46)
+script = ExtResource("2")
+enabled = true
+position_px = Vector2(0, 280)
 
 [node name="Back" type="Button" parent="VBox"]
 text = "Trocar nome"
