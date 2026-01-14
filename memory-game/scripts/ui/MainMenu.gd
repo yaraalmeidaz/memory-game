@@ -12,4 +12,4 @@ func _on_name_changed(new_text: String) -> void:
 
 func _on_start_pressed() -> void:
 	GameState.start_new_run(name_edit.text)
-	get_tree().change_scene_to_file("res://scenes/LevelSelect.tscn")
+	get_tree().change_scene_to_file("res://scenes/ui/LevelSelect.tscn")

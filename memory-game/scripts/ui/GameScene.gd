@@ -1,6 +1,6 @@
 extends Control
 
-const CARD_SCENE := preload("res://scenes/Card.tscn")
+const CARD_SCENE := preload("res://scenes/game/Card.tscn")
 const PERSONAGENS_DIR := "res://assets/imagens/Personagens"
 
 @onready var info_label: Label = $TopBar/Info
@@ -72,7 +72,7 @@ func _process(_delta: float) -> void:
 	timer_label.text = GameState.format_time(elapsed)
 
 func _on_back_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/LevelSelect.tscn")
+	get_tree().change_scene_to_file("res://scenes/ui/LevelSelect.tscn")
 
 func _build_board(pairs: int) -> void:
 	for child in board.get_children():
@@ -254,9 +254,9 @@ func _finish_level() -> void:
 
 	if level >= GameState.LEVEL_PAIRS.size() - 1:
 		GameState.submit_run_to_leaderboard()
-		get_tree().change_scene_to_file("res://scenes/Leaderboard.tscn")
+		get_tree().change_scene_to_file("res://scenes/ranking/Leaderboard.tscn")
 	else:
-		get_tree().change_scene_to_file("res://scenes/LevelSelect.tscn")
+		get_tree().change_scene_to_file("res://scenes/ui/LevelSelect.tscn")
 
 func _list_personagens() -> Array[String]:
 	var names: Array[String] = []

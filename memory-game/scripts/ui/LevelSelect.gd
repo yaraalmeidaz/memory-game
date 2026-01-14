@@ -59,8 +59,8 @@ func _build_buttons() -> void:
 		btn.disabled = locked
 		btn.pressed.connect(func():
 			GameState.current_level = i
-			get_tree().change_scene_to_file("res://scenes/Game.tscn"))
+			get_tree().change_scene_to_file("res://scenes/levels/Level%d.tscn" % (i + 1)))
 		grid.add_child(btn)
 
 func _on_back_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
+	get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")

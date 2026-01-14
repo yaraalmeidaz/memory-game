@@ -24,4 +24,4 @@ func _ready() -> void:
 		list_box.add_child(lbl)
 
 func _on_play_again_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
+	get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")
