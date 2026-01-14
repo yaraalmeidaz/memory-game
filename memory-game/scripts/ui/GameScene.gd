@@ -19,6 +19,8 @@ var _matched_cards := 0
 
 const _CARD_BASE_SIZE: Vector2 = Vector2(725.0, 1102.0)
 const _PREFERRED_COLUMNS: Array[int] = [6, 5, 4, 3, 2]
+const _MARGIN_X: float = 16.0
+const _MARGIN_Y: float = 12.0
 
 func _ready() -> void:
 	overlay.visible = false
@@ -95,23 +97,31 @@ func _build_board(pairs: int) -> void:
 
 	# layout
 	var vp: Vector2 = get_viewport_rect().size
-	var top_reserved: float = 80.0
+	var top_reserved: float = maxf(70.0, $TopBar.size.y + 10.0)
 	var area_w: float = vp.x
 	var area_h: float = vp.y - top_reserved
-	var columns: int = _choose_columns(deck.size())
+	# gap adaptativo: mantém “respiro” mas usa bem a tela
+	var gap: float = clampf(minf(vp.x, vp.y) * 0.010, 4.0, 12.0)
+	var columns: int = _choose_columns(deck.size(), vp, top_reserved, gap)
 	var rows: int = int(ceil(float(deck.size()) / float(columns)))
 
-	var base_size: Vector2 = Vector2(725.0, 1102.0)
-	var gap: float = 10.0
-	var scale_x: float = (area_w - gap * float(columns - 1)) / (base_size.x * float(columns))
-	var scale_y: float = (area_h - gap * float(rows - 1)) / (base_size.y * float(rows))
-	var s: float = clampf(minf(scale_x, scale_y), 0.06, 0.30)
+	var base_size: Vector2 = _CARD_BASE_SIZE
+
+	var usable_w: float = maxf(1.0, area_w - 2.0 * _MARGIN_X - gap * float(columns - 1))
+	var usable_h: float = maxf(1.0, area_h - 2.0 * _MARGIN_Y - gap * float(rows - 1))
+
+	var scale_x: float = usable_w / (base_size.x * float(columns))
+	var scale_y: float = usable_h / (base_size.y * float(rows))
+	var s: float = clampf(minf(scale_x, scale_y), 0.06, 0.65)
 
 	var card_w: float = base_size.x * s
 	var card_h: float = base_size.y * s
 	var grid_w: float = float(columns) * card_w + float(columns - 1) * gap
 	var grid_h: float = float(rows) * card_h + float(rows - 1) * gap
-	var origin: Vector2 = Vector2((vp.x - grid_w) * 0.5, top_reserved + (area_h - grid_h) * 0.5)
+	var origin: Vector2 = Vector2(
+		_MARGIN_X + (area_w - 2.0 * _MARGIN_X - grid_w) * 0.5,
+		top_reserved + _MARGIN_Y + (area_h - 2.0 * _MARGIN_Y - grid_h) * 0.5
+	)
 
 	for i in deck.size():
 		var card := CARD_SCENE.instantiate() as Card
@@ -127,26 +137,61 @@ func _build_board(pairs: int) -> void:
 		card.position = Vector2(x, y)
 
 
-func _choose_columns(card_count: int) -> int:
-	# Mantém um padrão por linha e tenta evitar última linha incompleta.
-	# Preferências: 6,5,4,3,2 (nessa ordem).
-	for c in _PREFERRED_COLUMNS:
-		if c <= 0:
-			continue
-		if card_count % c == 0:
-			return c
+func _choose_columns(card_count: int, vp: Vector2, top_reserved: float, gap: float) -> int:
+	# Escolhe o número de colunas que maximiza o tamanho das cartas (usa mais a largura).
+	# Regra principal: tentar manter a mesma quantidade de cartas por linha, evitando
+	# última linha incompleta (ou seja, preferir grids sem sobras) quando possível.
+	var area_w: float = vp.x
+	var area_h: float = vp.y - top_reserved
+	var base_size: Vector2 = _CARD_BASE_SIZE
 
-	# Se não der para dividir perfeito, escolhe a opção com menos espaços vazios.
-	var best_c := 4
-	var best_empty := 999999
+	var candidates_no_remainder: Array[int] = []
 	for c in _PREFERRED_COLUMNS:
+		if c > 0 and card_count % c == 0:
+			candidates_no_remainder.append(c)
+	# Se não houver nenhum divisor dentro dos preferidos, tenta outros divisores (limitados)
+	# para ainda conseguir um grid completo sem explodir o número de colunas.
+	if candidates_no_remainder.is_empty():
+		var max_c: int = min(card_count, 8)
+		for c in range(2, max_c + 1):
+			if card_count % c == 0 and not _PREFERRED_COLUMNS.has(c):
+				candidates_no_remainder.append(c)
+
+	var candidates: Array[int]
+	var enforce_full_rows := false
+	if not candidates_no_remainder.is_empty():
+		candidates = candidates_no_remainder
+		enforce_full_rows = true
+	else:
+		candidates = _PREFERRED_COLUMNS
+
+	var best_c: int = candidates[0] if candidates.size() > 0 else 4
+	var best_score: float = -999999.0
+
+	for c in candidates:
 		if c <= 0:
 			continue
-		var rows := int(ceil(float(card_count) / float(c)))
-		var empty := rows * c - card_count
-		if empty < best_empty:
-			best_empty = empty
+		var rows: int = int(ceil(float(card_count) / float(c)))
+		var empty: int = rows * c - card_count
+
+		var usable_w: float = maxf(1.0, area_w - 2.0 * _MARGIN_X - gap * float(c - 1))
+		var usable_h: float = maxf(1.0, area_h - 2.0 * _MARGIN_Y - gap * float(rows - 1))
+		var scale_x: float = usable_w / (base_size.x * float(c))
+		var scale_y: float = usable_h / (base_size.y * float(rows))
+		var raw_s: float = minf(scale_x, scale_y)
+
+		var score: float = raw_s
+		if not enforce_full_rows:
+			# Quando não dá para evitar sobras, penaliza buracos (prioridade ainda é carta maior).
+			score -= float(empty) * 0.003
+			# Leve bônus quando não há buracos.
+			if empty == 0:
+				score += 0.002
+
+		if score > best_score:
+			best_score = score
 			best_c = c
+
 	return best_c
 
 func _on_card_pressed(card: Card) -> void:
