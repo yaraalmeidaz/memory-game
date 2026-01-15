@@ -16,7 +16,7 @@ var _empty_style := StyleBoxEmpty.new()
 
 func _ready() -> void:
 	if player_label != null:
-		player_label.text = "Jogador: %s" % GameState.player_name
+		player_label.text = ""
 	# Se os assets do LevelSelect existirem, usa eles. Caso contrário, cai no lock padrão.
 	if ResourceLoader.exists(LEVELSELECT_LOCK_PATH):
 		_icon_locked = load(LEVELSELECT_LOCK_PATH)

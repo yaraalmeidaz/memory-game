@@ -3,11 +3,11 @@ extends Control
 const CARD_SCENE := preload("res://scenes/game/Card.tscn")
 const PERSONAGENS_DIR := "res://assets/imagens/Personagens"
 
-@onready var info_label: Label = $TopBar/Info
-@onready var timer_label: Label = $TopBar/Timer
-@onready var board: Node2D = $Board
-@onready var overlay: ColorRect = $Overlay
-@onready var overlay_label: Label = $Overlay/OverlayLabel
+@onready var info_label := get_node_or_null("TopBar/Info") as Label
+@onready var timer_label := get_node_or_null("TopBar/Timer") as Label
+@onready var board := get_node_or_null("Board") as Node2D
+@onready var overlay := get_node_or_null("Overlay") as ColorRect
+@onready var overlay_label := get_node_or_null("Overlay/OverlayLabel") as Label
 
 var _start_msec: int = 0
 var _blocked := false
@@ -24,7 +24,8 @@ const _CARD_BASE_SIZE: Vector2 = Vector2(421, 593)
 
 
 func _ready() -> void:
-	overlay.visible = false
+	if overlay != null:
+		overlay.visible = false
 	_start_msec = Time.get_ticks_msec()
 	_first = null
 	_second = null
@@ -33,7 +34,9 @@ func _ready() -> void:
 
 	var level := GameState.current_level
 	var pairs := GameState.get_pairs_for_level(level)
-	info_label.text = "Jogador: %s  |  Nível %d (%d pares)" % [GameState.player_name, level + 1, pairs]
+	# UI opcional: se existir um label de info, deixa vazio (sem nome do jogador).
+	if info_label != null:
+		info_label.text = ""
 
 	# Monta o tabuleiro depois que o layout inicial (TopBar/anchors) foi calculado,
 	# senão o TopBar pode reportar um tamanho gigante e empurrar as cartas pra fora.
@@ -72,12 +75,16 @@ func _pick_card_at(mouse_global: Vector2) -> Card:
 
 func _process(_delta: float) -> void:
 	var elapsed := float(Time.get_ticks_msec() - _start_msec) / 1000.0
-	timer_label.text = GameState.format_time(elapsed)
+	if timer_label != null:
+		timer_label.text = GameState.format_time(elapsed)
 
 func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/ui/LevelSelect.tscn")
 
 func _build_board(pairs: int) -> void:
+	if board == null:
+		push_error("Board não encontrado na cena Game")
+		return
 	for child in board.get_children():
 		child.queue_free()
 
@@ -254,8 +261,11 @@ func _finish_level() -> void:
 	GameState.complete_level(level, elapsed)
 	_blocked = true
 
-	overlay.visible = true
-	overlay_label.text = "Concluído! Tempo: %s" % GameState.format_time(elapsed)
+	if overlay != null:
+		overlay.visible = true
+	# Tela de conclusão: apenas imagem (sem texto).
+	if overlay_label != null:
+		overlay_label.text = ""
 	await get_tree().create_timer(1.0).timeout
 
 	if level >= GameState.LEVEL_PAIRS.size() - 1:
