@@ -45,10 +45,12 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if overlay.visible:
 			return
-		# Se o mouse está sobre algum Control (ex.: botão Voltar), deixa a UI lidar.
+		# Se o mouse está sobre a UI (ex.: botão Voltar), deixa a UI lidar.
+		# Importante: o Control raiz pode aparecer como hovered; isso não deve bloquear o tabuleiro.
 		var hovered := get_viewport().gui_get_hovered_control()
-		if hovered != null:
-			return
+		if hovered != null and hovered != self:
+			if $TopBar.is_ancestor_of(hovered):
+				return
 
 		var picked := _pick_card_at(get_global_mouse_position())
 		if picked != null:
