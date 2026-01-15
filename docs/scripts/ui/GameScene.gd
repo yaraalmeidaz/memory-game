@@ -3,6 +3,21 @@ extends Control
 const CARD_SCENE := preload("res://scenes/game/Card.tscn")
 const PERSONAGENS_DIR := "res://assets/imagens/Personagens"
 
+const _KNOWN_PERSONAGENS: Array[String] = [
+	"dwightschrute",
+	"eren",
+	"hange",
+	"homemaranha",
+	"iguro",
+	"killua",
+	"kurapika",
+	"mikasa",
+	"neferpitou",
+	"nezuco",
+	"rick",
+	"tengen",
+]
+
 @onready var info_label := get_node_or_null("TopBar/Info") as Label
 @onready var timer_label := get_node_or_null("TopBar/Timer") as Label
 @onready var board := get_node_or_null("Board") as Node2D
@@ -93,6 +108,9 @@ func _build_board(pairs: int) -> void:
 	if available.size() < pairs:
 		push_error("Poucos personagens: precisa %d, tem %d" % [pairs, available.size()])
 		pairs = min(pairs, available.size())
+	if pairs <= 0:
+		push_error("Sem personagens disponíveis para montar o tabuleiro (export Web pode não listar arquivos por diretório).")
+		return
 
 	var chosen: Array[String] = []
 	chosen.assign(available.slice(0, pairs))
@@ -277,14 +295,23 @@ func _finish_level() -> void:
 func _list_personagens() -> Array[String]:
 	var names: Array[String] = []
 	var dir := DirAccess.open(PERSONAGENS_DIR)
-	if dir == null:
-		push_error("Não abriu pasta: " + PERSONAGENS_DIR)
-		return names
+	if dir != null:
+		for f in dir.get_files():
+			if f.ends_with(".import"):
+				continue
+			if f.get_extension().to_lower() != "png":
+				continue
+			names.append(f.get_basename())
 
-	for f in dir.get_files():
-		if f.get_extension().to_lower() != "png":
-			continue
-		if f.ends_with(".import"):
-			continue
-		names.append(f.get_basename())
+	# Em builds exportadas (especialmente Web), o diretório pode não listar os arquivos fonte
+	# (ex.: só o recurso importado vai no PCK). Nesse caso, usa lista fallback.
+	if names.is_empty():
+		for base in _KNOWN_PERSONAGENS:
+			var p := "%s/%s.png" % [PERSONAGENS_DIR, base]
+			if ResourceLoader.exists(p):
+				names.append(base)
+
+	if names.is_empty():
+		push_error("Não foi possível obter lista de personagens em: " + PERSONAGENS_DIR)
+
 	return names
