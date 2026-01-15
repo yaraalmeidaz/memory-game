@@ -1,74 +1,102 @@
-[gd_scene load_steps=3 format=3 uid="uid://b52d2jjdkl6kj"]
+[gd_scene load_steps=6 format=3 uid="uid://b52d2jjdkl6kj"]
 
 [ext_resource type="Script" uid="uid://c140h6ig2micx" path="res://scripts/ui/GameScene.gd" id="1"]
 [ext_resource type="Script" uid="uid://b0cvcx804jr20" path="res://scripts/ui/FreePosition.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://l66nuwmlvt8i" path="res://assets/imagens/game/Voltar.png" id="3_lyhax"]
+[ext_resource type="Texture2D" uid="uid://c78oeo216de6t" path="res://assets/imagens/game/LevelUp.png" id="3_vrspl"]
+[ext_resource type="Texture2D" uid="uid://bir24kxwd8l50" path="res://assets/imagens/game/fundo.png" id="4_7qcb4"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1")
 
 [node name="TopBar" type="Control" parent="."]
-anchors_preset = 13
+layout_mode = 1
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 44.0
+offset_left = 2.0
+offset_right = 2.0
+offset_bottom = 112.0
+grow_horizontal = 2
 mouse_filter = 1
-
-[node name="Info" type="Label" parent="TopBar"]
-custom_minimum_size = Vector2(520, 0)
-layout_mode = 0
-text = "Nível"
-script = ExtResource("2")
-enabled = true
 
 [node name="Timer" type="Label" parent="TopBar"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 0
-offset_left = 388.0
-offset_top = 24.0
-offset_right = 508.0
-offset_bottom = 40.0
+offset_left = 962.0
+offset_top = 36.0
+offset_right = 1192.0
+offset_bottom = 82.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 46
 text = "00:00"
 horizontal_alignment = 2
 script = ExtResource("2")
 enabled = true
-position_px = Vector2(388, 24)
+position_px = Vector2(962, 36)
 
 [node name="Back" type="Button" parent="TopBar"]
-custom_minimum_size = Vector2(140, 40)
+custom_minimum_size = Vector2(4, 3)
 layout_mode = 0
-offset_left = 657.0
-offset_top = -2.0
-offset_right = 797.0
-offset_bottom = 38.0
-text = "Voltar"
+offset_left = 1227.0
+offset_top = 33.0
+offset_right = 1285.0
+offset_bottom = 77.0
+text = "
+"
 script = ExtResource("2")
 enabled = true
-position_px = Vector2(657, -2)
+position_px = Vector2(1227, 33)
+
+[node name="Sprite2D" type="Sprite2D" parent="TopBar/Back"]
+position = Vector2(30, 23)
+scale = Vector2(0.36764708, 0.33039215)
+texture = ExtResource("3_lyhax")
 
 [node name="Board" type="Node2D" parent="."]
 
 [node name="Overlay" type="ColorRect" parent="."]
 visible = false
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0, 0, 0, 0.35)
 
 [node name="OverlayLabel" type="Label" parent="Overlay"]
 custom_minimum_size = Vector2(400, 80)
 layout_mode = 0
-text = "Concluído!"
+offset_left = 484.0
+offset_top = 256.0
+offset_right = 884.0
+offset_bottom = 474.0
+text = "
+"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("2")
 enabled = true
+position_px = Vector2(484, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="Overlay/OverlayLabel"]
+position = Vector2(189, 153.99998)
+scale = Vector2(1.3485749, 0.9924115)
+texture = ExtResource("3_vrspl")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(668.00006, 382)
+scale = Vector2(0.69427085, 0.69953704)
+texture = ExtResource("4_7qcb4")
 
 [connection signal="pressed" from="TopBar/Back" to="." method="_on_back_pressed"]
