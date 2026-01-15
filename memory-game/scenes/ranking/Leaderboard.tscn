@@ -33,29 +33,35 @@ offset_top = 408.0
 offset_right = 999.0
 offset_bottom = 642.0
 columns = 3
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 6
 script = ExtResource("2")
 enabled = true
 position_px = Vector2(339, 408)
 
-[node name="Sprite2D" type="Sprite2D" parent="VBox/List"]
-position = Vector2(330.00003, 87)
+[node name="ListBg" type="Sprite2D" parent="VBox"]
+position = Vector2(669.00006, 495.0)
 scale = Vector2(0.9793548, 0.7925531)
+z_index = -1
 texture = ExtResource("3_0ej6v")
 
 [node name="HeaderRank" type="Label" parent="VBox/List"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(70, 0)
 text = "Rank"
 horizontal_alignment = 1
 
 [node name="HeaderName" type="Label" parent="VBox/List"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(360, 0)
 text = "Nome"
 
 [node name="HeaderTime" type="Label" parent="VBox/List"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(120, 0)
 text = "Tempo"
 horizontal_alignment = 2
 

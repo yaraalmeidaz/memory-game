@@ -4,11 +4,15 @@ extends Control
 @onready var list_box := get_node_or_null("VBox/List") as GridContainer
 
 const _BLACK := Color(0, 0, 0, 1)
+const _RANK_MIN_W := 70
+const _NAME_MIN_W := 360
+const _TIME_MIN_W := 120
 
-func _make_cell(text_value: String, align: int) -> Label:
+func _make_cell(text_value: String, align: int, min_w: int) -> Label:
 	var lbl := Label.new()
 	lbl.text = text_value
 	lbl.horizontal_alignment = align
+	lbl.custom_minimum_size = Vector2(min_w, 0)
 	lbl.add_theme_color_override("font_color", _BLACK)
 	return lbl
 
@@ -33,20 +37,22 @@ func _ready() -> void:
 
 	# Garante 3 colunas (Rank/Nome/Tempo)
 	list_box.columns = 3
+	# Menor distância horizontal pra sobrar espaço pros nomes.
+	list_box.add_theme_constant_override("h_separation", 8)
 	_clear_rows_keep_header()
 
 	var top := GameState.get_top5()
 	if top.is_empty():
-		list_box.add_child(_make_cell("-", HORIZONTAL_ALIGNMENT_CENTER))
-		list_box.add_child(_make_cell("(Sem resultados ainda)", HORIZONTAL_ALIGNMENT_LEFT))
-		list_box.add_child(_make_cell("-", HORIZONTAL_ALIGNMENT_RIGHT))
+		list_box.add_child(_make_cell("-", HORIZONTAL_ALIGNMENT_CENTER, _RANK_MIN_W))
+		list_box.add_child(_make_cell("(Sem resultados ainda)", HORIZONTAL_ALIGNMENT_LEFT, _NAME_MIN_W))
+		list_box.add_child(_make_cell("-", HORIZONTAL_ALIGNMENT_RIGHT, _TIME_MIN_W))
 		return
 
 	for i in top.size():
 		var e: Dictionary = top[i]
-		list_box.add_child(_make_cell(str(i + 1), HORIZONTAL_ALIGNMENT_CENTER))
-		list_box.add_child(_make_cell(str(e["name"]), HORIZONTAL_ALIGNMENT_LEFT))
-		list_box.add_child(_make_cell(GameState.format_time(float(e["time"])), HORIZONTAL_ALIGNMENT_RIGHT))
+		list_box.add_child(_make_cell(str(i + 1), HORIZONTAL_ALIGNMENT_CENTER, _RANK_MIN_W))
+		list_box.add_child(_make_cell(str(e["name"]), HORIZONTAL_ALIGNMENT_LEFT, _NAME_MIN_W))
+		list_box.add_child(_make_cell(GameState.format_time(float(e["time"])), HORIZONTAL_ALIGNMENT_RIGHT, _TIME_MIN_W))
 
 func _on_play_again_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")
