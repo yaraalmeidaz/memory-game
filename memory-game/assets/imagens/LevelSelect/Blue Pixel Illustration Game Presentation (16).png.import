@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6ytftvtisrtw"
-path="res://.godot/imported/CardFront.png-0c17f86519894b4f1bc75adbddb8070b.ctex"
+uid="uid://b0mo167vsp0rf"
+path="res://.godot/imported/Blue Pixel Illustration Game Presentation (16).png-f27a7497eac3f73aafe4f80f1db8693d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/imagens/CardFront.png"
-dest_files=["res://.godot/imported/CardFront.png-0c17f86519894b4f1bc75adbddb8070b.ctex"]
+source_file="res://assets/imagens/LevelSelect/Blue Pixel Illustration Game Presentation (16).png"
+dest_files=["res://.godot/imported/Blue Pixel Illustration Game Presentation (16).png-f27a7497eac3f73aafe4f80f1db8693d.ctex"]
 
 [params]
 

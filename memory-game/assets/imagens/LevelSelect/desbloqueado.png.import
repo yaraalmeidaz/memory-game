@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6ytftvtisrtw"
-path="res://.godot/imported/CardFront.png-0c17f86519894b4f1bc75adbddb8070b.ctex"
+uid="uid://b78bpkowcujit"
+path="res://.godot/imported/desbloqueado.png-826a09f20a4b6ddc84cd336909b4875e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/imagens/CardFront.png"
-dest_files=["res://.godot/imported/CardFront.png-0c17f86519894b4f1bc75adbddb8070b.ctex"]
+source_file="res://assets/imagens/LevelSelect/desbloqueado.png"
+dest_files=["res://.godot/imported/desbloqueado.png-826a09f20a4b6ddc84cd336909b4875e.ctex"]
 
 [params]
 
