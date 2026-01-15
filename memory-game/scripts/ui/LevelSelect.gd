@@ -1,26 +1,54 @@
 extends Control
 
 const LOCK_TEX := preload("res://assets/imagens/lock_closed.png")
+const LEVELSELECT_LOCK_PATH := "res://assets/imagens/LevelSelect/bloqueado.png"
+const LEVELSELECT_UNLOCK_PATH := "res://assets/imagens/LevelSelect/desbloqueado.png"
 
 @onready var player_label: Label = $VBox/Player
 @onready var total_label: Label = $VBox/Total
-@onready var level_buttons: Array[Button] = [
-	$VBox/Scroll/Grid/Level1,
-	$VBox/Scroll/Grid/Level2,
-	$VBox/Scroll/Grid/Level3,
-	$VBox/Scroll/Grid/Level4,
-	$VBox/Scroll/Grid/Level5,
-	$VBox/Scroll/Grid/Level6,
-]
+@onready var level_buttons: Array[Button] = _collect_level_buttons()
 
 var _lock_tex_small: Texture2D
+var _icon_locked: Texture2D
+var _icon_unlocked: Texture2D
+
+var _empty_style := StyleBoxEmpty.new()
 
 func _ready() -> void:
 	player_label.text = "Jogador: %s" % GameState.player_name
-	_lock_tex_small = _make_small_icon(LOCK_TEX, 28)
+	# Se os assets do LevelSelect existirem, usa eles. Caso contrário, cai no lock padrão.
+	if ResourceLoader.exists(LEVELSELECT_LOCK_PATH):
+		_icon_locked = load(LEVELSELECT_LOCK_PATH)
+	if ResourceLoader.exists(LEVELSELECT_UNLOCK_PATH):
+		_icon_unlocked = load(LEVELSELECT_UNLOCK_PATH)
+
+	# Tamanho do ícone baseado no botão (pra virar "imagem" do botão)
+	var icon_size_px: int = 46
+	if level_buttons.size() > 0 and level_buttons[0] != null:
+		var s := level_buttons[0].custom_minimum_size
+		if s.x > 0 and s.y > 0:
+			icon_size_px = int(minf(s.x, s.y))
+
+	_lock_tex_small = _make_small_icon(LOCK_TEX, icon_size_px)
+	if _icon_locked != null:
+		_icon_locked = _make_small_icon(_icon_locked, icon_size_px)
+	if _icon_unlocked != null:
+		_icon_unlocked = _make_small_icon(_icon_unlocked, icon_size_px)
 	_bind_buttons()
 	_update_buttons()
 	_update_total_time()
+
+
+func _collect_level_buttons() -> Array[Button]:
+	var buttons: Array[Button] = []
+	var grid := $VBox/Scroll/Grid
+	for child in grid.get_children():
+		if child is Button:
+			buttons.append(child)
+	# Ordena por nome (Level1, Level2, ...) para manter o índice certo.
+	buttons.sort_custom(func(a: Button, b: Button) -> bool:
+		return a.name.naturalnocasecmp_to(b.name) < 0)
+	return buttons
 
 
 func _make_small_icon(tex: Texture2D, size_px: int) -> Texture2D:
@@ -51,8 +79,7 @@ func _bind_buttons() -> void:
 		var btn := level_buttons[i]
 		if btn == null:
 			continue
-		if btn.pressed.is_connected(_on_level_pressed.bind(i)):
-			continue
+		# Botões são instâncias novas quando a cena recarrega, então não duplica.
 		btn.pressed.connect(_on_level_pressed.bind(i))
 
 
@@ -72,13 +99,20 @@ func _update_buttons() -> void:
 		if i < GameState.level_times.size() and GameState.level_times[i] >= 0:
 			time_txt = " — %s" % GameState.format_time(GameState.level_times[i])
 		var locked: bool = i > GameState.unlocked_level
+		# Remove o "botão cinza" padrão e deixa só a imagem.
+		btn.flat = true
+		btn.focus_mode = Control.FOCUS_NONE
+		btn.add_theme_stylebox_override("normal", _empty_style)
+		btn.add_theme_stylebox_override("hover", _empty_style)
+		btn.add_theme_stylebox_override("pressed", _empty_style)
+		btn.add_theme_stylebox_override("disabled", _empty_style)
+		btn.add_theme_stylebox_override("focus", _empty_style)
+		btn.expand_icon = true
+		btn.text = ""
 		if locked:
-			btn.text = "Nível %d — bloqueado" % [i + 1]
-			btn.icon = _lock_tex_small
-			btn.expand_icon = false
+			btn.icon = _icon_locked if _icon_locked != null else _lock_tex_small
 		else:
-			btn.text = "Nível %d — %d pares%s" % [i + 1, pairs, time_txt]
-			btn.icon = null
+			btn.icon = _icon_unlocked
 		btn.disabled = locked
 
 
