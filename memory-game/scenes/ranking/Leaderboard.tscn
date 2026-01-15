@@ -1,52 +1,92 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=8 format=3 uid="uid://iyvvj23ogmjf"]
 
-[ext_resource type="Script" path="res://scripts/ui/Leaderboard.gd" id="1"]
-[ext_resource type="Script" path="res://scripts/ui/FreePosition.gd" id="2"]
+[ext_resource type="Script" uid="uid://bt41ysfjpfrx7" path="res://scripts/ui/Leaderboard.gd" id="1"]
+[ext_resource type="Script" uid="uid://b0cvcx804jr20" path="res://scripts/ui/FreePosition.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://vp3g4pjqo5i3" path="res://assets/imagens/LeaderBoard/bannerList.png" id="3_0ej6v"]
+[ext_resource type="Texture2D" uid="uid://do43qqf1htlxt" path="res://assets/imagens/LeaderBoard/ranking.png" id="3_7j6ke"]
+[ext_resource type="Texture2D" uid="uid://186sdjaecfdi" path="res://assets/imagens/LeaderBoard/restart.png" id="3_l0klh"]
+[ext_resource type="Texture2D" uid="uid://dbk06ergsolxo" path="res://assets/imagens/LeaderBoard/fundo.png" id="4_xhfdc"]
+[ext_resource type="Texture2D" uid="uid://blby475cbvq5f" path="res://assets/imagens/LeaderBoard/icone.png" id="6_0ej6v"]
 
 [node name="Leaderboard" type="Control"]
-anchor_left = 0.0
-anchor_top = 0.0
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1")
 
 [node name="VBox" type="Control" parent="."]
-anchor_left = 0.0
-anchor_top = 0.0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-
-[node name="Title" type="Label" parent="VBox"]
-text = "Top 5 (tempo total)"
-horizontal_alignment = 1
-custom_minimum_size = Vector2(520, 0)
-script = ExtResource("2")
-enabled = true
-position_px = Vector2(140, 80)
-
-[node name="YourTime" type="Label" parent="VBox"]
-text = "Seu tempo:"
-horizontal_alignment = 1
-custom_minimum_size = Vector2(520, 0)
-script = ExtResource("2")
-enabled = true
-position_px = Vector2(140, 120)
 
 [node name="List" type="VBoxContainer" parent="VBox"]
 custom_minimum_size = Vector2(520, 300)
+layout_mode = 0
+offset_left = 420.0
+offset_top = 346.0
+offset_right = 940.0
+offset_bottom = 646.0
 script = ExtResource("2")
 enabled = true
-position_px = Vector2(140, 170)
+position_px = Vector2(420, 346)
+
+[node name="Sprite2D" type="Sprite2D" parent="VBox/List"]
+position = Vector2(242.00006, 143)
+scale = Vector2(0.9793548, 0.7925531)
+texture = ExtResource("3_0ej6v")
+
+[node name="YourTime" type="Label" parent="VBox"]
+custom_minimum_size = Vector2(52, 0)
+layout_mode = 0
+offset_left = 436.0
+offset_top = 337.0
+offset_right = 736.0
+offset_bottom = 367.0
+theme_override_colors/font_color = Color(0.043039158, 0.04303915, 0.04303915, 1)
+theme_override_font_sizes/font_size = 30
+text = "Seu tempo:"
+horizontal_alignment = 1
+script = ExtResource("2")
+enabled = true
+position_px = Vector2(436, 337)
 
 [node name="PlayAgain" type="Button" parent="VBox"]
-text = "Jogar novamente"
-custom_minimum_size = Vector2(220, 44)
+custom_minimum_size = Vector2(22, 4)
+layout_mode = 0
+offset_left = 563.0
+offset_top = 683.0
+offset_right = 755.0
+offset_bottom = 727.0
+text = "
+"
 script = ExtResource("2")
 enabled = true
-position_px = Vector2(290, 500)
+position_px = Vector2(563, 683)
+
+[node name="Sprite2D" type="Sprite2D" parent="VBox/PlayAgain"]
+position = Vector2(89.99998, 19.999985)
+scale = Vector2(0.54735225, 0.5145163)
+texture = ExtResource("3_l0klh")
+
+[node name="Ranking" type="Sprite2D" parent="VBox"]
+position = Vector2(671.00006, 226.00002)
+scale = Vector2(0.94058293, 0.9328358)
+texture = ExtResource("3_7j6ke")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(670, 374)
+scale = Vector2(0.6947917, 0.7074074)
+texture = ExtResource("4_xhfdc")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(661.99994, 81.00001)
+scale = Vector2(0.47142857, 0.39247313)
+texture = ExtResource("6_0ej6v")
 
 [connection signal="pressed" from="VBox/PlayAgain" to="." method="_on_play_again_pressed"]

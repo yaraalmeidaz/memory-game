@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://fdolmpmu5xtc"]
+[gd_scene load_steps=5 format=3 uid="uid://fdolmpmu5xtc"]
 
 [ext_resource type="Script" uid="uid://dqiirtv17gghn" path="res://scripts/ui/LevelSelect.gd" id="1"]
 [ext_resource type="Script" uid="uid://b0cvcx804jr20" path="res://scripts/ui/FreePosition.gd" id="2"]
-[ext_resource type="Texture2D" uid="uid://b0mo167vsp0rf" path="res://assets/imagens/LevelSelect/Blue Pixel Illustration Game Presentation (16).png" id="3_tyiyf"]
+[ext_resource type="Texture2D" uid="uid://yulmhd8agi56" path="res://assets/imagens/LevelSelect/exit.png" id="3_td270"]
+[ext_resource type="Texture2D" uid="uid://b0mo167vsp0rf" path="res://assets/imagens/LevelSelect/fundo.png" id="3_tyiyf"]
 
 [node name="LevelSelect" type="Control"]
 layout_mode = 3
@@ -18,6 +19,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Scroll" type="ScrollContainer" parent="VBox"]
 custom_minimum_size = Vector2(520, 300)
@@ -105,17 +108,24 @@ script = ExtResource("2")
 enabled = true
 position_px = Vector2(767, 137)
 
-[node name="Back" type="Button" parent="VBox"]
-custom_minimum_size = Vector2(200, 44)
+[node name="Exit" type="Button" parent="VBox"]
+custom_minimum_size = Vector2(12, 14)
 layout_mode = 0
 offset_left = 570.0
 offset_top = 585.0
-offset_right = 770.0
+offset_right = 713.0
 offset_bottom = 629.0
-text = "Trocar nome"
+text = "
+p
+"
 script = ExtResource("2")
 enabled = true
 position_px = Vector2(570, 585)
+
+[node name="Sprite2D" type="Sprite2D" parent="VBox/Exit"]
+position = Vector2(67, 26.999996)
+scale = Vector2(0.72047246, 0.5851064)
+texture = ExtResource("3_td270")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -128,4 +138,4 @@ position = Vector2(669.5, 372.49994)
 scale = Vector2(0.6984375, 0.687963)
 texture = ExtResource("3_tyiyf")
 
-[connection signal="pressed" from="VBox/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="VBox/Exit" to="." method="_on_back_pressed"]

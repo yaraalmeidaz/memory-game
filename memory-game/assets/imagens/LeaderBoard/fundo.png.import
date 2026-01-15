@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0mo167vsp0rf"
-path="res://.godot/imported/Blue Pixel Illustration Game Presentation (16).png-f27a7497eac3f73aafe4f80f1db8693d.ctex"
+uid="uid://dbk06ergsolxo"
+path="res://.godot/imported/fundo.png-cbe94c270eab9948c7eddab5d26f5b05.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/imagens/LevelSelect/Blue Pixel Illustration Game Presentation (16).png"
-dest_files=["res://.godot/imported/Blue Pixel Illustration Game Presentation (16).png-f27a7497eac3f73aafe4f80f1db8693d.ctex"]
+source_file="res://assets/imagens/LeaderBoard/fundo.png"
+dest_files=["res://.godot/imported/fundo.png-cbe94c270eab9948c7eddab5d26f5b05.ctex"]
 
 [params]
 

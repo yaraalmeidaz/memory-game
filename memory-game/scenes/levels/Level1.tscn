@@ -2,9 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b52d2jjdkl6kj" path="res://scenes/game/Game.tscn" id="1"]
 [ext_resource type="Script" uid="uid://bim42kw6hle7h" path="res://scripts/ui/LevelWrapper.gd" id="2"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_j08sa"]
-load_path = "res://.godot/imported/nivel1.png-cf2bdc56bb8155be05d21e02fca64b84.ctex"
+[ext_resource type="Texture2D" uid="uid://84nosfsoltwc" path="res://assets/imagens/game/nivel1.png" id="3_x4si1"]
 
 [node name="Level1" type="Control"]
 layout_mode = 3
@@ -22,4 +20,4 @@ offset_bottom = 8.0
 
 [node name="nivel1" type="Sprite2D" parent="Game"]
 position = Vector2(294, 61)
-texture = SubResource("CompressedTexture2D_j08sa")
+texture = ExtResource("3_x4si1")
