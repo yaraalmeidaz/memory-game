@@ -1,0 +1,13 @@
+res://scenes/game/Card.tscn::f7c305cf320566eb0d32c9290f466183::1768487500::res://.godot/exported/133200997/export-67f9c5f543ed598a76cd9cf3de93ba4c-Card.scn
+res://scenes/game/Game.tscn::144e10b2305ce78072e4f85e9b79ab46::1768494796::res://.godot/exported/133200997/export-5437775ef1092aeedc35596830e65393-Game.scn
+res://scenes/levels/Level1.tscn::a2272f44f52907dc6aa37a0743ce4b41::1768494847::res://.godot/exported/133200997/export-67528f03e2f7d585abad2506c64f9fee-Level1.scn
+res://scenes/levels/Level2.tscn::abfad4ed8a4db07cb1909c28a77523d3::1768490787::res://.godot/exported/133200997/export-6cf518d728147782a98502ac32510399-Level2.scn
+res://scenes/levels/Level3.tscn::8b7272c96d0e569b1854beca9971f8ff::1768491126::res://.godot/exported/133200997/export-46681a3a8d180194a98031a84b2746d7-Level3.scn
+res://scenes/levels/Level4.tscn::0f4ebddaef72f301503f27e6e8142b15::1768491152::res://.godot/exported/133200997/export-290e73be4f59db46f2cab158a34553c6-Level4.scn
+res://scenes/levels/Level5.tscn::5e0df6da4c2bd7193d38acd5cf611350::1768491183::res://.godot/exported/133200997/export-d320d61c5aeb8fb194010c7fe0eb846b-Level5.scn
+res://scenes/levels/Level6.tscn::a1ae24ce5cc2058263e99c4accfe5514::1768491216::res://.godot/exported/133200997/export-670a0672b3d59c05f04f5469bef35d32-Level6.scn
+res://scenes/ranking/Leaderboard.tscn::2685cfc3d84a71241f8807be1f958bef::1768507711::res://.godot/exported/133200997/export-ad294cd26460582b1f09005576a1f2f9-Leaderboard.scn
+res://scenes/ui/LevelSelect.tscn::cd212127873fca98a2ecd7d9836e247a::1768498555::res://.godot/exported/133200997/export-28452c0934c7c2b5ec3d786e213aaa63-LevelSelect.scn
+res://scenes/ui/MainMenu.tscn::7d28014405a87c770d249bea7ee54354::1768480662::res://.godot/exported/133200997/export-99174fb0fd2492fee0dd7d5ca3b0e3c8-MainMenu.scn
+res://scenes/ui/StartScreen.tscn::42adc1e70d6a61c9ccc4d741052f39e8::1768500563::res://.godot/exported/133200997/export-260d66d29b8ebad96d74b9ba4f2c015e-StartScreen.scn
+res://node_2d.tscn::9d6ded8832fe8e1ec3b0e0855ac96665::1768485824::res://.godot/exported/133200997/export-362256a061aa8890e9a1e558b11e5ec3-node_2d.scn
