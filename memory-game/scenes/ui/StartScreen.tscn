@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://drhm51aavl7cq"]
+[gd_scene load_steps=10 format=3 uid="uid://drhm51aavl7cq"]
 
 [ext_resource type="Script" uid="uid://ctshj8xwlnhut" path="res://scripts/ui/StartScreen.gd" id="1"]
 [ext_resource type="Script" uid="uid://b0cvcx804jr20" path="res://scripts/ui/FreePosition.gd" id="2"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://odbaifshi0j3" path="res://assets/imagens/home/arvore.png" id="6_84hrd"]
 [ext_resource type="Texture2D" uid="uid://2ilklccrr0gd" path="res://assets/imagens/home/logo.png" id="7_eokdo"]
 [ext_resource type="Texture2D" uid="uid://cyr0wbewv1biw" path="res://assets/imagens/Blue Pixel Illustration Game Presentation (6).png" id="8_nwhq5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8m0in"]
 
 [node name="StartScreen" type="Control"]
 layout_mode = 3
@@ -24,11 +26,14 @@ offset_left = 511.0
 offset_top = 511.0
 offset_right = 792.0
 offset_bottom = 597.0
-text = "Start"
-script = ExtResource("2")
-enabled = true
-position_px = Vector2(360, 320)
-set_anchors_top_left = false
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8m0in")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8m0in")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_8m0in")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8m0in")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8m0in")
+flat = true
+focus_mode = 0
+text = ""
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

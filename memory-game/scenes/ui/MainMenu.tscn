@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6jah4018il5p"]
+[gd_scene load_steps=11 format=3 uid="uid://b6jah4018il5p"]
 
 [ext_resource type="Script" uid="uid://ecv1g1eflubg" path="res://scripts/ui/MainMenu.gd" id="1"]
 [ext_resource type="Script" uid="uid://b0cvcx804jr20" path="res://scripts/ui/FreePosition.gd" id="2"]
@@ -7,6 +7,17 @@
 [ext_resource type="Texture2D" uid="uid://dulqorcns141f" path="res://assets/imagens/StartScreen/ceu.png" id="4_bhu4a"]
 [ext_resource type="Texture2D" uid="uid://o5jvpmvf0dl2" path="res://assets/imagens/MainMenu/arvores.png" id="5_e2per"]
 [ext_resource type="Texture2D" uid="uid://ca2e6vnc33l8o" path="res://assets/imagens/MainMenu/titulo.png" id="7_e2per"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_km1hc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d7y4p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q6k3m"]
+bg_color = Color(0, 0, 0, 0)
+content_margin_left = 18.0
+content_margin_right = 18.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -30,6 +41,25 @@ offset_bottom = 14.0
 script = ExtResource("2")
 enabled = true
 
+[node name="NameFocus" type="Button" parent="VBox"]
+custom_minimum_size = Vector2(320, 34)
+layout_mode = 0
+offset_left = 425.0
+offset_top = 371.0
+offset_right = 807.0
+offset_bottom = 443.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_d7y4p")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_d7y4p")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_d7y4p")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d7y4p")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_d7y4p")
+flat = true
+focus_mode = 0
+text = ""
+script = ExtResource("2")
+enabled = true
+position_px = Vector2(425, 371)
+
 [node name="NameEdit" type="LineEdit" parent="VBox"]
 custom_minimum_size = Vector2(320, 34)
 layout_mode = 0
@@ -37,6 +67,11 @@ offset_left = 425.0
 offset_top = 371.0
 offset_right = 807.0
 offset_bottom = 443.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_q6k3m")
+theme_override_styles/focus = SubResource("StyleBoxFlat_q6k3m")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_q6k3m")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.55)
 placeholder_text = "Digite seu nome"
 script = ExtResource("2")
 enabled = true
@@ -50,10 +85,16 @@ offset_top = 379.0
 offset_right = 955.0
 offset_bottom = 442.0
 shortcut_context = NodePath("../../ParallaxBackground/5/Nome")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_d7y4p")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_d7y4p")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_d7y4p")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_d7y4p")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_d7y4p")
+flat = true
+focus_mode = 0
 disabled = true
 button_mask = 3
-text = "
-"
+text = ""
 script = ExtResource("2")
 enabled = true
 position_px = Vector2(893, 379)
@@ -95,4 +136,6 @@ scale = Vector2(0.759773, 0.7434211)
 texture = ExtResource("3_e2per")
 
 [connection signal="text_changed" from="VBox/NameEdit" to="." method="_on_name_changed"]
+[connection signal="text_submitted" from="VBox/NameEdit" to="." method="_on_name_submitted"]
+[connection signal="pressed" from="VBox/NameFocus" to="." method="_on_name_focus_pressed"]
 [connection signal="pressed" from="VBox/Start" to="." method="_on_start_pressed"]
