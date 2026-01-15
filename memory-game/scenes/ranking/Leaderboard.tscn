@@ -21,13 +21,14 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="List" type="VBoxContainer" parent="VBox"]
+[node name="List" type="GridContainer" parent="VBox"]
 custom_minimum_size = Vector2(520, 300)
 layout_mode = 0
 offset_left = 420.0
 offset_top = 346.0
 offset_right = 940.0
 offset_bottom = 646.0
+columns = 3
 script = ExtResource("2")
 enabled = true
 position_px = Vector2(420, 346)
@@ -51,6 +52,20 @@ horizontal_alignment = 1
 script = ExtResource("2")
 enabled = true
 position_px = Vector2(436, 337)
+
+[node name="HeaderRank" type="Label" parent="VBox/List"]
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Rank"
+horizontal_alignment = 1
+
+[node name="HeaderName" type="Label" parent="VBox/List"]
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Nome"
+
+[node name="HeaderTime" type="Label" parent="VBox/List"]
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Tempo"
+horizontal_alignment = 2
 
 [node name="PlayAgain" type="Button" parent="VBox"]
 custom_minimum_size = Vector2(22, 4)
