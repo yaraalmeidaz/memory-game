@@ -17,15 +17,14 @@ var _second: Card
 var _total_cards := 0
 var _matched_cards := 0
 
-const _CARD_BASE_SIZE: Vector2 = Vector2(725.0, 1102.0)
 const _PREFERRED_COLUMNS: Array[int] = [6, 5, 4, 3, 2]
 const _MARGIN_X: float = 16.0
 const _MARGIN_Y: float = 12.0
+const _CARD_BASE_SIZE: Vector2 = Vector2(421, 593)
+
 
 func _ready() -> void:
 	overlay.visible = false
-	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	overlay_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_start_msec = Time.get_ticks_msec()
 	_first = null
 	_second = null
@@ -36,7 +35,9 @@ func _ready() -> void:
 	var pairs := GameState.get_pairs_for_level(level)
 	info_label.text = "Jogador: %s  |  Nível %d (%d pares)" % [GameState.player_name, level + 1, pairs]
 
-	_build_board(pairs)
+	# Monta o tabuleiro depois que o layout inicial (TopBar/anchors) foi calculado,
+	# senão o TopBar pode reportar um tamanho gigante e empurrar as cartas pra fora.
+	call_deferred("_build_board", pairs)
 
 
 func _input(event: InputEvent) -> void:
@@ -97,7 +98,10 @@ func _build_board(pairs: int) -> void:
 
 	# layout
 	var vp: Vector2 = get_viewport_rect().size
-	var top_reserved: float = maxf(70.0, $TopBar.size.y + 10.0)
+	# Em alguns layouts o TopBar pode iniciar com size.y muito grande antes do layout estabilizar.
+	# Limitamos para manter o tabuleiro visível.
+	var top_bar_h: float = clampf($TopBar.size.y, 0.0, 120.0)
+	var top_reserved: float = maxf(70.0, top_bar_h + 10.0)
 	var area_w: float = vp.x
 	var area_h: float = vp.y - top_reserved
 	# gap adaptativo: mantém “respiro” mas usa bem a tela

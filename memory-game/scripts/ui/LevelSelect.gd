@@ -101,6 +101,12 @@ func _update_buttons() -> void:
 		# Remove o "botão cinza" padrão e deixa só a imagem.
 		btn.flat = true
 		btn.focus_mode = Control.FOCUS_NONE
+		# Mantém o ícone com cor total mesmo quando o botão está disabled.
+		var _white := Color(1, 1, 1, 1)
+		btn.add_theme_color_override("icon_normal_color", _white)
+		btn.add_theme_color_override("icon_hover_color", _white)
+		btn.add_theme_color_override("icon_pressed_color", _white)
+		btn.add_theme_color_override("icon_disabled_color", _white)
 		btn.add_theme_stylebox_override("normal", _empty_style)
 		btn.add_theme_stylebox_override("hover", _empty_style)
 		btn.add_theme_stylebox_override("pressed", _empty_style)

@@ -90,7 +90,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
-size = Vector2(725, 1102)
+size = Vector2(421, 593)
 
 [node name="Card" type="Node2D"]
 script = ExtResource("1")

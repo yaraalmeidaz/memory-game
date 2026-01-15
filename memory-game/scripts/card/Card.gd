@@ -118,9 +118,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if matched:
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		var w: float = 725.0 * scale.x
-		var h: float = 1102.0 * scale.y
-		var rect := Rect2(Vector2(-w * 0.5, -h * 0.5), Vector2(w, h))
+		var base_size := Vector2(421.0, 593.0)
+		if card_back != null and card_back.texture != null:
+			base_size = card_back.texture.get_size()
+		var rect := Rect2(-base_size * 0.5, base_size)
 		var local := to_local(get_global_mouse_position())
 		if rect.has_point(local):
 			pressed.emit(self)
