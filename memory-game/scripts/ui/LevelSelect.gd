@@ -4,8 +4,8 @@ const LOCK_TEX := preload("res://assets/imagens/lock_closed.png")
 const LEVELSELECT_LOCK_PATH := "res://assets/imagens/LevelSelect/bloqueado.png"
 const LEVELSELECT_UNLOCK_PATH := "res://assets/imagens/LevelSelect/desbloqueado.png"
 
-@onready var player_label: Label = $VBox/Player
-@onready var total_label: Label = $VBox/Total
+@onready var player_label := get_node_or_null("VBox/Player") as Label
+@onready var total_label := get_node_or_null("VBox/Total") as Label
 @onready var level_buttons: Array[Button] = _collect_level_buttons()
 
 var _lock_tex_small: Texture2D
@@ -15,7 +15,8 @@ var _icon_unlocked: Texture2D
 var _empty_style := StyleBoxEmpty.new()
 
 func _ready() -> void:
-	player_label.text = "Jogador: %s" % GameState.player_name
+	if player_label != null:
+		player_label.text = "Jogador: %s" % GameState.player_name
 	# Se os assets do LevelSelect existirem, usa eles. Caso contrário, cai no lock padrão.
 	if ResourceLoader.exists(LEVELSELECT_LOCK_PATH):
 		_icon_locked = load(LEVELSELECT_LOCK_PATH)
@@ -62,6 +63,8 @@ func _make_small_icon(tex: Texture2D, size_px: int) -> Texture2D:
 
 
 func _update_total_time() -> void:
+	if total_label == null:
+		return
 	var total := 0.0
 	var any := false
 	for t in GameState.level_times:
@@ -89,15 +92,11 @@ func _update_buttons() -> void:
 		var btn: Button = level_buttons[i]
 		if btn == null:
 			continue
-		var is_visible: bool = i < max_levels
-		btn.visible = is_visible
-		if not is_visible:
+		var should_show: bool = i < max_levels
+		btn.visible = should_show
+		if not should_show:
 			continue
 
-		var pairs: int = GameState.get_pairs_for_level(i)
-		var time_txt: String = ""
-		if i < GameState.level_times.size() and GameState.level_times[i] >= 0:
-			time_txt = " — %s" % GameState.format_time(GameState.level_times[i])
 		var locked: bool = i > GameState.unlocked_level
 		# Remove o "botão cinza" padrão e deixa só a imagem.
 		btn.flat = true
