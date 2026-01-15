@@ -16,15 +16,14 @@ self.addEventListener('fetch', (event) => {
 	if (request.url.startsWith(self.location.origin)) {
 		event.respondWith(
 			fetch(request).then((response) => {
-				// Clone the response to be able to modify the headers
-				const clonedResponse = response.clone();
-				const newHeaders = new Headers(clonedResponse.headers);
+				// Clone the response headers and add Cross-Origin Isolation headers
+				const newHeaders = new Headers(response.headers);
 				newHeaders.set('Cross-Origin-Embedder-Policy', 'require-corp');
 				newHeaders.set('Cross-Origin-Opener-Policy', 'same-origin');
 				
-				return new Response(clonedResponse.body, {
-					status: clonedResponse.status,
-					statusText: clonedResponse.statusText,
+				return new Response(response.body, {
+					status: response.status,
+					statusText: response.statusText,
 					headers: newHeaders
 				});
 			}).catch((error) => {
