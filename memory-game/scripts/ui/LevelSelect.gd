@@ -57,21 +57,21 @@ func _bind_buttons() -> void:
 
 
 func _update_buttons() -> void:
-	var max_levels := min(GameState.LEVEL_PAIRS.size(), level_buttons.size())
+	var max_levels: int = min(GameState.LEVEL_PAIRS.size(), level_buttons.size())
 	for i in range(level_buttons.size()):
-		var btn := level_buttons[i]
+		var btn: Button = level_buttons[i]
 		if btn == null:
 			continue
-		var visible := i < max_levels
-		btn.visible = visible
-		if not visible:
+		var is_visible: bool = i < max_levels
+		btn.visible = is_visible
+		if not is_visible:
 			continue
 
-		var pairs := GameState.get_pairs_for_level(i)
-		var time_txt := ""
+		var pairs: int = GameState.get_pairs_for_level(i)
+		var time_txt: String = ""
 		if i < GameState.level_times.size() and GameState.level_times[i] >= 0:
 			time_txt = " — %s" % GameState.format_time(GameState.level_times[i])
-		var locked := i > GameState.unlocked_level
+		var locked: bool = i > GameState.unlocked_level
 		if locked:
 			btn.text = "Nível %d — bloqueado" % [i + 1]
 			btn.icon = _lock_tex_small
