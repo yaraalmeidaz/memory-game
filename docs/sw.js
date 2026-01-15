@@ -1,5 +1,5 @@
-// Service Worker para adicionar headers de Cross-Origin Isolation
-// Necessário para SharedArrayBuffer e threading no Godot Web
+// Service Worker to add Cross-Origin Isolation headers
+// Required for SharedArrayBuffer and threading in Godot Web
 
 self.addEventListener('install', (event) => {
 	self.skipWaiting();
@@ -12,18 +12,19 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
 	const request = event.request;
 	
-	// Para requisições same-origin, adiciona os headers necessários
+	// For same-origin requests, add the necessary headers
 	if (request.url.startsWith(self.location.origin)) {
 		event.respondWith(
 			fetch(request).then((response) => {
-				// Clone a resposta para poder modificar os headers
-				const newHeaders = new Headers(response.headers);
+				// Clone the response to be able to modify the headers
+				const clonedResponse = response.clone();
+				const newHeaders = new Headers(clonedResponse.headers);
 				newHeaders.set('Cross-Origin-Embedder-Policy', 'require-corp');
 				newHeaders.set('Cross-Origin-Opener-Policy', 'same-origin');
 				
-				return new Response(response.body, {
-					status: response.status,
-					statusText: response.statusText,
+				return new Response(clonedResponse.body, {
+					status: clonedResponse.status,
+					statusText: clonedResponse.statusText,
 					headers: newHeaders
 				});
 			}).catch((error) => {
@@ -32,7 +33,7 @@ self.addEventListener('fetch', (event) => {
 			})
 		);
 	} else {
-		// Para requisições cross-origin, apenas faz fetch normal
+		// For cross-origin requests, just do normal fetch
 		event.respondWith(fetch(request));
 	}
 });
