@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://dulqorcns141f" path="res://assets/imagens/home/ceu.png" id="4_1wlrw"]
 [ext_resource type="Texture2D" uid="uid://dc6kxefnfwjly" path="res://assets/imagens/home/moita.png" id="5_nwhq5"]
 [ext_resource type="Texture2D" uid="uid://odbaifshi0j3" path="res://assets/imagens/home/arvore.png" id="6_84hrd"]
+[ext_resource type="Texture2D" uid="uid://q2036xge8ymk" path="res://assets/imagens/start.png" id="7_1wlrw"]
 [ext_resource type="Texture2D" uid="uid://2ilklccrr0gd" path="res://assets/imagens/home/logo.png" id="7_eokdo"]
-[ext_resource type="Texture2D" uid="uid://cyr0wbewv1biw" path="res://assets/imagens/Blue Pixel Illustration Game Presentation (6).png" id="8_nwhq5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8m0in"]
 
@@ -80,6 +80,6 @@ texture = ExtResource("7_eokdo")
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/6"]
 position = Vector2(654, 552)
 scale = Vector2(0.8988603, 0.9495412)
-texture = ExtResource("8_nwhq5")
+texture = ExtResource("7_1wlrw")
 
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
